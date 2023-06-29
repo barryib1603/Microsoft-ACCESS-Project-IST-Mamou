@@ -1,0 +1,94 @@
+Option Compare Database
+
+Private Sub Commande9_Click()
+DoCmd.Close  [bouton fermer]
+End Sub
+
+Private Sub Form_Current()
+DoCmd.GoToRecord , , acNewRec  [vider les champs au demarrage]
+End Sub
+ Me.undo annuler la saisi avant de fermer la fenêtre..
+confirme = MsgBox("Confirmer les changements ?", vbYesNo, "Gestion des enregistrements")
+Select Case confirme
+Case vbYes: DoCmd.GoToRecord , , acNewRec pour vider le champs de saisis dès le lancement
+Case vbNo:
+End Select [pour afficher le message avant execution.]
+docmd.openform "nom de la table" pour que quand on clik sur le bouton, ça renvoi cette fenêtre
+Me.InsideHeight = 9000 pour donner la taille par deffaut à la fenêtre
+
+[confirme = MsgBox("Confirmer les changements ?", vbYesNo, "Gestion des enregistrements")
+Select Case confirme
+Case vbYes: DoCmd.Close
+Case vbNo: Me.Undo
+        DoCmd.Close
+End Select] quand on dit oui ça confirme et ça ferme. quand on dit non, ça annule et ça ferme
+
+Private Sub Commande13_Click()
+If IsNull(Me.Utlisateur) Then
+MsgBox "L'utilisateur ne peut-être vide", vbInformation, "Entrez le nom de connexion"
+Me.Utlisateur.SetFocus
+End If
+End Sub si on clik sur valider et que le champs utilisateur est vide, le curseur revient sur le chmps et envoi le msg 
+
+If Me.MPasse.Value <> Me.confirmation.Value Then
+MsgBox "Code de confirmation incorrect", vbInformation, "Erreur"
+Me.confirmation.Value = ""
+Me.confirmation.SetFocus
+
+End If  pour comparer le champ Mot de passe et confirmer. et afficher un message d'erreur si ces deux champs ne sont pas identiques
+
+Else
+MsgBox "Utilisateur ajouté avec succès", vbInformation, "La gestion des enregistrements"
+DoCmd.GoToRecord , , acNewRec
+Me.confirmation.Value = ""
+End If
+End If si toutes les conditions sont remplies, afficher le message de confirmation et recommencer l'enregistrement
+
+Me.UTILISATEUR.SetFocus pour selectionner le champs utilisateur
+
+
+
+[Private Sub effacer_Click()
+Me.numero_client.Value = ""
+End Sub] quand on clik sur le boutton effacer le filtre, ça annul la dernière saisis dans le champs numero_client
+
+sur reception focus[
+Private Sub numero_client_GotFocus()
+Me.numero_document.Visible = True
+End Sub
+] une fois qu'on clik sur ce champs, automatiquement, le champs suivant apparait
+
+[me.undo] pour annuler la dernière action
+
+Dans independant: =compte([Numero]) pour compter le nombre d'elements de la table
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+la fonction =compte([champ clé primaire]) pour compter le nombre d'enregistrement
+
+Delai:AjDate("j";+30;[Date_Pret]) une requete qui affiche si le dalai depasse la date pret de 30jour;
+Observation: VraiFaux([Delai]>=Date();"En Cours";"Delai Expiré") pour que si la date de retour du document n'est pas arrivée, la machine affiche "En cours", au cas contraire la machine affiche"Delai expiré".
+
+
+
+
+
+
+Mode d'affichage de l'image(echelle) pourque l'image soit prise en format total sur la page
+    
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+									GESTION DES VENTES
+trois tables produit, clients et commande. plus le bouton deconnexion et la date et l'heure
+quand on clik sur produit, ça nous envoi sur Enregistrement des produits. avec les champs( code_produit,designation,pau et stock plus deux bouton ajouter et voir  
+et un bouton fermer. sur le bouton ajouter on a une boite de dialogue( voulez-vous enregistrer ???) Quand on clik sur voir xa nous affiche la liste des articles enregistrés
+dans les produits disponibles, il ya un bouton qui nous permet d'augmenter le stock (quantité). et affiche le stock total
+La table client(numero,nom_client,date-contact,adresse_client.) deux boutons ajouter et voir
+La table commande(num_cmd,date_cmd,client,quantité_cmd,prix de vente unitaire  plus deux champs qui affiche PAu et stock du produit selectionné et deux boutons ajouter et voir
+Produit liste deroulante 
+si la quantité est superieur au stock, xa nous affiche ( commmande non disponible)
+quand on ajoute une commande xa nous affiche commande ajouté avec succes.
+dans la table voir commande, on a deux boutons recharger la commmande et supprimer la commande(qui supprime la commande selectinnée)
+Sur le bouton deconnexion, on a une boite de dialogue( voulez-vous quitter l'application ?)
+numero, num_cmd,code_produit(clée primaire)
+client dans cmd,et produit dans cmd (clée etrangère)
